@@ -71,6 +71,19 @@
             <scope>test</scope>
         </dependency>
 
+<!--        SQL-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jdbc</artifactId>
+            <version>2.0.1.RELEASE</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.200</version>
+            <scope>runtime</scope>
+        </dependency>
 
     </dependencies>
 
@@ -120,10 +133,10 @@
                 <version>9.4.18.v20190429</version>
                 <configuration>
                     <httpConnector>
-                        <port>8078</port>
+                        <port>8077</port>
                     </httpConnector>
                     <!-- scans your project for any changes to hot swap it to server -->
-                    <scanIntervalSeconds>5</scanIntervalSeconds>
+<!--                    <scanIntervalSeconds>5</scanIntervalSeconds>-->
                 </configuration>
             </plugin>
 

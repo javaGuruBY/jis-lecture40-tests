@@ -23,7 +23,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-///home/max/j/jis-lecture40-tests/src/main/webapp/WEB-INF/spring-web-servlet.xml
 @ContextConfiguration(classes = {SpringWebAppInitializer.class, WebConfig.class})
 @WebAppConfiguration
 public class StudentControllerTest {
