@@ -1,5 +1,7 @@
 package by.jrr.controller;
 
+import by.jrr.config.SpringWebAppInitializer;
+import by.jrr.config.WebConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @RunWith(SpringJUnit4ClassRunner.class)
 ///home/max/j/jis-lecture40-tests/src/main/webapp/WEB-INF/spring-web-servlet.xml
-@ContextConfiguration("web.xml")
+@ContextConfiguration(classes = {SpringWebAppInitializer.class, WebConfig.class})
 @WebAppConfiguration
 public class StudentControllerTest {
 
