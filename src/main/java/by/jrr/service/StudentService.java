@@ -2,10 +2,11 @@ package by.jrr.service;
 
 import by.jrr.bean.Student;
 import by.jrr.repository.StudentRepository;
+import org.springframework.stereotype.Service;
 
-import java.net.PortUnreachableException;
 import java.time.LocalDateTime;
 
+@Service
 public class StudentService {
 
     StudentRepository studentRepository;
