@@ -1,48 +1,45 @@
-package by.jrr.service;
+package by.jrr.controller;
 
 import by.jrr.bean.Student;
-import com.sun.source.tree.ModuleTree;
+import by.jrr.service.StudentService;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import by.jrr.repository.StudentRepository;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class StudentServiceTest {
-
+public class ApiStudentControllerTest {
     @InjectMocks
-    StudentService studentService;
+    ApiStudentController studentController;
     @Mock
-    StudentRepository studentRepositoryMock;
+    StudentService studentServiceMock;
 
     @Test
     public void saveNewStudent() {
-        studentService.saveNewStudent(new Student());
-        verify(studentRepositoryMock).save(any(Student.class));
+        studentController.saveNewStudent(new Student());
+        verify(studentServiceMock).saveNewStudent(any(Student.class));
     }
 
     @Test
     public void findStudentById_shouldReturnStudent() {
         long id = 5;
-        Optional<Student> expected = Optional.of(makeStudent(id));
+        Student expected = makeStudent(id);
 
-        when(studentRepositoryMock.findById(id))
+        when(studentServiceMock.findStudentById(id))
                 .thenReturn(expected);
 
-        Student actual = studentService.findStudentById(id);
+        Student actual = studentController.findStudentById(id);
         assertEquals(makeStudent(id), actual);
     }
 
@@ -51,10 +48,10 @@ public class StudentServiceTest {
         long id = 10;
         Student expected = new Student();
 
-        when(studentRepositoryMock.findById(id))
-                .thenReturn(Optional.empty());
+        when(studentServiceMock.findStudentById(id))
+                .thenReturn(new Student());
 
-        Student actual = studentService.findStudentById(id);
+        Student actual = studentController.findStudentById(id);
         assertEquals(expected, actual);
     }
 
@@ -62,10 +59,10 @@ public class StudentServiceTest {
     public void updateStudent() {
         long id = 5;
         Student student = makeStudent(id);
-        when(studentRepositoryMock.updateStudent(student))
+        when(studentController.updateStudent(student))
                 .thenReturn(student);
 
-        Student actualUpdatedStudent = studentService.updateStudent(student);
+        Student actualUpdatedStudent = studentController.updateStudent(student);
 
         assertEquals(student, actualUpdatedStudent);
     }
@@ -75,11 +72,14 @@ public class StudentServiceTest {
         long id = 5;
         Student student = makeStudent(id);
 
-        studentService.deleteStudent(student);
+        when(studentServiceMock.findStudentById(id))
+                .thenReturn(student);
 
-        verify(studentRepositoryMock).delete(5L);
+        studentController.deleteStudent(5L);
+
+        verify(studentServiceMock).findStudentById(5L);
+        verify(studentServiceMock).deleteStudent(student);
     }
-
 
     @Test
     public void findAllStudents() {
@@ -89,10 +89,10 @@ public class StudentServiceTest {
                 .map(id -> makeStudent(id))
                 .collect(Collectors.toList());
 
-        when(studentRepositoryMock.findAll())
+        when(studentController.findAllStudents())
                 .thenReturn(expected);
 
-        List<Student> actual = studentService.findAllStudents();
+        List<Student> actual = studentController.findAllStudents();
 
         assertIterableEquals(expected, actual);
     }

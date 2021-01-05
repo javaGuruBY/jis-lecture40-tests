@@ -1,0 +1,10 @@
+insert into student values (1, 'student name', 'last Name', NULL);
+insert into student values (2, 'student name', 'last Name', NULL);
+insert into student values (3, 'student3', 'last Name id3', '2020-05-11');
+insert into student values (4, 'student name', 'last Name', NULL);
+insert into student values (5, 'student name', 'last Name', NULL);
+insert into student values (6, 'student name', 'last Name', NULL);
+insert into student values (7, 'student name', 'last Name', NULL);
+insert into student values (8, 'student name', 'last Name', NULL);
+insert into student values (9, 'student name', 'last Name', '2020-12-31');
+insert into student values (10, 'student name', 'last Name', NULL);

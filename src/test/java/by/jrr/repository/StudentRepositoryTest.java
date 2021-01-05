@@ -1,37 +1,58 @@
 package by.jrr.repository;
 
-import by.jrr.config.DataBaseConfig;
-import by.jrr.config.SpringWebAppInitializer;
-import by.jrr.config.TestDBConfig;
-import by.jrr.config.WebConfig;
+import by.jrr.bean.Student;
+import by.jrr.service.StudentService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {
-        SpringWebAppInitializer.class,
-        WebConfig.class,
-        DataBaseConfig.class,
-        TestDBConfig.class,
-        StudentRepository.class
-})
-@WebAppConfiguration
-@ActiveProfiles("test2")
+@RunWith(MockitoJUnitRunner.class)
 public class StudentRepositoryTest {
 
-    @Autowired
+    @InjectMocks
     StudentRepository studentRepository;
+    @Mock
+    JdbcTemplate jdbcTemplate;
 
     @Test
+    public void save() {
+        long id = 5;
+        studentRepository.save(makeStudent(id));
+        String query = "INSERT INTO student values (null, studentName, studentLastName, 2020-05-11T00:00)";
+        verify(jdbcTemplate).execute(query);
+    }
 
+    @Test
+    public void findById() {
+    }
+
+    @Test
     public void findAll() {
-        System.out.println(studentRepository.findAll().size());
+    }
+
+    @Test
+    public void updateStudent() {
+    }
+
+    @Test
+    public void delete() {
+    }
+
+    private Student makeStudent(Long id) {
+        Student student = new Student();
+        student.setId(id);
+        student.setName("studentName");
+        student.setLastName("studentLastName");
+        student.setRegistrationStamp(LocalDateTime.parse("2020-05-11T00:00:00"));
+        return student;
     }
 }

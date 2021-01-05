@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +17,12 @@ public class StudentRepository {
     JdbcTemplate jdbcTemplate;
 
     public void save(Student student) {
-
+        String query = String.format("INSERT INTO student values (%s, '%s', '%s', '%s')",
+                null,
+                student.getName(),
+                student.getLastName(),
+                student.getRegistrationStamp().toString());
+        jdbcTemplate.execute(query);
     }
 
     public Optional<Student> findById(Long id) {
@@ -31,5 +37,13 @@ public class StudentRepository {
     public List<Student> findAll() {
         String query = "SELECT * FROM student";
         return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Student.class));
+    }
+
+    public Student updateStudent(Student student) {
+        return null;
+    }
+
+    public Student delete(Long id) {
+        return null;
     }
 }
