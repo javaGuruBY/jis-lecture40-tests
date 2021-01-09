@@ -9,6 +9,7 @@ import by.jrr.repository.StudentRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -47,7 +48,6 @@ public class StudentServiceIntTest {
         assertEquals(9, (long) students.get(0).getId());
     }
 
-
 //    @Test
 //    public void testFindById_shouldReturn() {
 //        Student student = studentRepository.findById(3L).get();
@@ -67,6 +67,7 @@ public class StudentServiceIntTest {
         student.setRegistrationStamp(LocalDateTime.parse("2020-05-11T00:00:00"));
         return student;
     }
+
     private Student makeStudent() {
         Student student = new Student();
         student.setId(3L);

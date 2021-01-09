@@ -2,6 +2,9 @@ package by.jrr.service;
 
 import by.jrr.bean.Student;
 import by.jrr.repository.StudentRepository;
+import lombok.NoArgsConstructor;
+import org.assertj.core.util.VisibleForTesting;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Clock;
@@ -11,26 +14,31 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@NoArgsConstructor
 public class StudentService {
 
+    @Autowired
     StudentRepository studentRepository;
 
     Clock clock = Clock.systemDefaultZone();
 
+    @VisibleForTesting
     public void setClock(Clock clock) {
         this.clock = clock;
     }
 
+    @VisibleForTesting
     public void setDefaultClock() {
         this.clock = Clock.systemDefaultZone();
     }
 
-    public StudentService(StudentRepository studentRepository) {
+    @VisibleForTesting
+    public void setStudentRepository(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
     public void saveNewStudent(Student student) {
-        student.setRegistrationStamp(LocalDateTime.now());
+        student.setRegistrationStamp(LocalDateTime.now(clock));
         studentRepository.save(student);
     }
 
@@ -60,5 +68,4 @@ public class StudentService {
                 .filter(s -> s.getRegistrationStamp().isAfter(yesterday.atStartOfDay()))
                 .collect(Collectors.toList());
     }
-
 }

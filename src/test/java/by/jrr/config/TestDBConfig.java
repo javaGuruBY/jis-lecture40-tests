@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.ui.ExtendedModelMap;
 
 @Configuration
 public class TestDBConfig {
@@ -46,6 +45,4 @@ public class TestDBConfig {
                 .addScript("tenStudents.sql")
                 .build();
     }
-
-
 }
