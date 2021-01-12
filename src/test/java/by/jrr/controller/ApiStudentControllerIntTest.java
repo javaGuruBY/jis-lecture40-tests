@@ -26,6 +26,7 @@ import javax.sql.DataSource;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -67,7 +68,6 @@ public class ApiStudentControllerIntTest extends RestControllerTestBase {
 
         studentServiceSpy.setClock(Clock.fixed(Instant.parse("2020-12-31T00:00:00.00Z"), ZoneId.of("UTC")));
     }
-
 
     @Test
     public void saveNewStudent() throws Exception {
@@ -127,7 +127,6 @@ public class ApiStudentControllerIntTest extends RestControllerTestBase {
 
         assertThat(idCaptor.getAllValues()).allMatch(id -> id.equals(1L));
         assertThat(queryCaptor.getValue()).isEqualTo("SELECT * FROM student WHERE id=1");
-
     }
 //
 //    @Test
